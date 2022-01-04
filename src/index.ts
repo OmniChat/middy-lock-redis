@@ -40,7 +40,10 @@ export function MiddlewareLock(
       }
     }
 
-    if (request.event.lock) {
+    if (
+      request.event.lock &&
+      request.event.lock.expiration >= new Date().getTime()
+    ) {
       await request.event.lock.unlock();
     }
   };
