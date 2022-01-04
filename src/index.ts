@@ -32,18 +32,16 @@ export function MiddlewareLock(
   };
 
   const after = async (request: any) => {
+    const timeNow = new Date().getTime();
     if (request.event.Records) {
       for (const record of request.event.Records) {
-        if (record.lock) {
+        if (record.lock && record.lock.expiration >= timeNow) {
           record.lock.unlock();
         }
       }
     }
 
-    if (
-      request.event.lock &&
-      request.event.lock.expiration >= new Date().getTime()
-    ) {
+    if (request.event.lock && request.event.lock.expiration >= timeNow) {
       await request.event.lock.unlock();
     }
   };
