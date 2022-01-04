@@ -35,13 +35,13 @@ export function MiddlewareLock(
     const timeNow = new Date().getTime();
     if (request.event.Records) {
       for (const record of request.event.Records) {
-        if (record.lock && record.lock.expiration >= timeNow) {
-          record.lock.unlock();
+        if (record.lock?.expiration >= timeNow) {
+          await record.lock.unlock();
         }
       }
     }
 
-    if (request.event.lock && request.event.lock.expiration >= timeNow) {
+    if (request.event?.lock?.expiration >= timeNow) {
       await request.event.lock.unlock();
     }
   };
