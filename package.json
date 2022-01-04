@@ -2,14 +2,19 @@
   "name": "middy-lock-redis",
   "version": "1.0.0",
   "description": "Middy Lock Redis Lambda",
-  "main": "index.js",
+  "main": "lib/src/index.js",
+  "typings": "src/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "npx tsc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OmniChat/middy-lock-redis.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
   "author": "",

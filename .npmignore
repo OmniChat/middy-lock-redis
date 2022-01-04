@@ -1,0 +1,15 @@
+# folders
+.github/*
+.vscode/*
+node_modules
+
+# files
+.babelrc
+.editorconfig
+.eslintignore
+.eslintrc.json
+.gitignore
+.npmignore
+karma.conf.js
+postcss.config.js
+webpack.config.js
