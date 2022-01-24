@@ -5,7 +5,10 @@
   "main": "lib/src/index.js",
   "typings": "src/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --passWithNoTests --no-cache --runInBand",
+    "test:watch": "npm run test -- --watchAll",
+    "test:staged": "npm run test -- --findRelatedTests",
+    "test:coverage": "npm run test -- --coverage",
     "build": "npx tsc",
     "prepare": "npm run build"
   },
@@ -25,7 +28,11 @@
   "homepage": "https://github.com/OmniChat/middy-lock-redis#readme",
   "devDependencies": {
     "typescript": "^4.5.4",
-    "@types/redlock": "^4.0.3"
+    "@types/redlock": "^4.0.3",
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.7",
+    "jest-mock-extended": "^2.0.4",
+    "ts-jest": "^27.1.2"
   },
   "dependencies": {
     "redlock": "^4.2.0"
