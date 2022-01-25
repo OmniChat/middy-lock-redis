@@ -67,3 +67,9 @@ To run the unit tests, run following command
 ```bash
   npm run test
 ```
+
+## References
+
+- [Middy](https://github.com/middyjs/middy)
+- [ioredis](https://github.com/luin/ioredis)
+- [redlock](https://github.com/mike-marcacci/node-redlock)
