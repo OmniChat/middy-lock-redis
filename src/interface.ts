@@ -1,43 +1,23 @@
-export interface IEvent {
-  event: EventType;
+type Callback<T> = (err: any, value?: T) => void;
+
+export interface IHttp {
+  event: { body: string; lock?: Lock };
 }
 
-export interface EventType {
-  Records: SQSRecord[];
-  RecordsLock?: SQSRecord[];
-  body?: string;
+export interface ISqs {
+  event: {
+    Records: SQSRecord[] | [];
+    RecordsLock?: SQSRecord[];
+  };
 }
 
 export interface SQSRecord {
   messageId: string;
-  receiptHandle: string;
   body: string;
-  attributes: SQSRecordAttributes;
-  messageAttributes: SQSMessageAttributes;
-  md5OfBody: string;
-  eventSource: string;
-  eventSourceARN: string;
-  awsRegion: string;
-}
-export interface SQSRecordAttributes {
-  ApproximateReceiveCount: string;
-  SentTimestamp: string;
-  SenderId: string;
-  ApproximateFirstReceiveTimestamp: string;
-}
-export interface SQSMessageAttributes {
-  [name: string]: SQSMessageAttribute;
-}
-export interface SQSMessageAttribute {
-  stringValue?: string;
-  binaryValue?: string;
-  stringListValues: never[];
-  binaryListValues: never[];
-  dataType: SQSMessageAttributeDataType;
+  lock?: Lock;
 }
 
-export type SQSMessageAttributeDataType =
-  | "String"
-  | "Number"
-  | "Binary"
-  | string;
+export interface Lock {
+  expiration: number;
+  unlock(callback?: Callback<void>): Promise<void>;
+}

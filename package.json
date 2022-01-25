@@ -1,6 +1,6 @@
 {
   "name": "middy-lock-redis",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "Middy Lock Redis Lambda",
   "main": "lib/src/index.js",
   "typings": "src/index",
@@ -27,12 +27,13 @@
   },
   "homepage": "https://github.com/OmniChat/middy-lock-redis#readme",
   "devDependencies": {
-    "typescript": "^4.5.4",
-    "@types/redlock": "^4.0.3",
     "@types/jest": "^27.4.0",
+    "@types/redlock": "^4.0.3",
     "jest": "^27.4.7",
     "jest-mock-extended": "^2.0.4",
-    "ts-jest": "^27.1.2"
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.5.4"
   },
   "dependencies": {
     "redlock": "^4.2.0"
