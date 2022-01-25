@@ -1,5 +1,5 @@
 {
-  "name": "middy-lock-redis",
+  "name": "@omnichat/middy-lock-redis",
   "version": "1.0.0-beta",
   "description": "Middy Lock Redis Lambda",
   "main": "lib/src/index.js",
@@ -9,19 +9,17 @@
     "test:watch": "npm run test -- --watchAll",
     "test:staged": "npm run test -- --findRelatedTests",
     "test:coverage": "npm run test -- --coverage",
-    "build": "npx tsc",
-    "prepare": "npm run build"
+    "clean": "rimraf lib",
+    "build": "npm run clean && tsc",
+    "prepublish": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OmniChat/middy-lock-redis.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Felipe Zanfolin",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/OmniChat/middy-lock-redis/issues"
   },
@@ -37,5 +35,8 @@
   },
   "dependencies": {
     "redlock": "^4.2.0"
+  },
+  "directories": {
+    "lib": "lib"
   }
 }
