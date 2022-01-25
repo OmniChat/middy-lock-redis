@@ -4,7 +4,7 @@ Custom middleware created to lock redis on input and unlock on output lambda exe
 
 Note - designed for use in HTTP and SQS functions
 
-![Fluxo](https://raw.githubusercontent.com/OmniChat/middy-lock-redis/test/image/fluxo.png)
+![Fluxo](https://raw.githubusercontent.com/OmniChat/middy-lock-redis/readme/image/fluxo.png)
 
 ## Install
 
