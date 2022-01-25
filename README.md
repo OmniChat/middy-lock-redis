@@ -59,3 +59,11 @@ lambda-function:
             - Queue
             - Arn
 ```
+
+## Run test
+
+To run the unit tests, run following command
+
+```bash
+  npm run test
+```
