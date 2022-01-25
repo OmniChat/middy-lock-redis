@@ -4,6 +4,8 @@ Custom middleware created to lock redis on input and unlock on output lambda exe
 
 Note - designed for use in HTTP and SQS functions
 
+![Fluxo](https://raw.githubusercontent.com/OmniChat/middy-lock-redis/test/image/fluxo.png)
+
 ## Install
 
 To install this middleware you can use NPM:
@@ -15,8 +17,12 @@ $ npm install --save @omnichat/middy-lock-redis
 ## Usage Example
 
 ```typescript
-import middy from "@middy/core";
-import { MiddlewareLock } from "@omnichat/middy-lock-redis";
+import middy from '@middy/core';
+import { MiddlewareLock } from '@omnichat/middy-lock-redis';
+
+const client: CompatibleRedisClient = {
+  eval: () => {},
+};
 
 export const baseHandler = async (event) => {
   return {
@@ -27,6 +33,29 @@ export const baseHandler = async (event) => {
 };
 
 exports.handler = middy(baseHandler).use(
-  MiddlewareLock("key", CompatibleRedisClient, ttl, options)
+  MiddlewareLock('prefix', 'key', client, ttl, options),
 );
+```
+
+## Information
+
+For use in SQS when configured in lambda, ( event > sqs > batchSize ) it is necessary to add another property which is :
+
+functionResponseTypes: ReportBatchItemFailures
+
+This will make it so that when you lock the record, it returns to the queue only the record that was locked.
+
+Below is an example of SQS lambda function configuration:
+
+```yaml
+lambda-function:
+  handler: src/function.handler
+  events:
+    - sqs:
+        batchSize: 6
+        functionResponseTypes: ReportBatchItemFailures
+        arn:
+          Fn::GetAtt:
+            - Queue
+            - Arn
 ```
