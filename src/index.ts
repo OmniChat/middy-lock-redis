@@ -1,13 +1,14 @@
-import Redlock, { Lock, Options, CompatibleRedisClient } from "redlock";
-import { IEvent, SQSRecord } from "./interface";
+import Redlock, { Lock, Options, CompatibleRedisClient } from 'redlock';
+import { SQSRecord } from './interface';
 
 export function MiddlewareLock(
+  prefix: string,
   param: string,
   connection: CompatibleRedisClient,
   ttl?: number,
-  options?: Options
+  options?: Options,
 ) {
-  const before = async (request: IEvent) => {
+  const before = async <T extends { event: any }>(request: T) => {
     if (connection) {
       const optionsRedlock = options || {
         driftFactor: 0.1,
@@ -21,7 +22,11 @@ export function MiddlewareLock(
         for (const [index, record] of request.event.Records.entries()) {
           try {
             const data = JSON.parse(record.body);
-            redlock.lock = await lock(redLockClient, data[param], ttl);
+            redlock.lock = await lock(
+              redLockClient,
+              `${prefix}:${data[param]}`,
+              ttl,
+            );
             Object.assign(record, redlock);
           } catch (error) {
             request.event.RecordsLock.push(record);
@@ -32,13 +37,17 @@ export function MiddlewareLock(
 
       if (request.event.body) {
         const data = JSON.parse(request.event.body);
-        redlock.lock = await lock(redLockClient, data[param], ttl);
+        redlock.lock = await lock(
+          redLockClient,
+          `${prefix}:${data[param]}`,
+          ttl,
+        );
         Object.assign(request.event, redlock);
       }
     }
   };
 
-  const after = async (request: any) => {
+  const after = async <T extends { event: any }>(request: T) => {
     const timeNow = new Date().getTime();
     if (request.event.Records) {
       for (const record of request.event.Records) {
@@ -52,7 +61,7 @@ export function MiddlewareLock(
           batchItemFailures: request.event?.RecordsLock.map(
             (record: SQSRecord) => ({
               itemIdentifier: record.messageId,
-            })
+            }),
           ),
         };
       }
@@ -68,7 +77,7 @@ export function MiddlewareLock(
   async function lock(
     redLockClient: Redlock,
     lockId: string,
-    ttl = 7500
+    ttl = 7500,
   ): Promise<Lock> {
     return redLockClient.lock(`LOCKS:${lockId}`, ttl);
   }
