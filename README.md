@@ -1,4 +1,4 @@
-# OmniChat Middy Lock Redis
+# Middy Lock Redis
 
 Custom middleware created to lock redis on input and unlock on output lambda execution
 
@@ -68,8 +68,15 @@ To run the unit tests, run following command
   npm run test
 ```
 
-## References
+## Credits
+
+Created by Omnichat team
+
+Libraries used:
+
+- [redlock](https://github.com/mike-marcacci/node-redlock)
+
+Libraries dependence:
 
 - [Middy](https://github.com/middyjs/middy)
 - [ioredis](https://github.com/luin/ioredis)
-- [redlock](https://github.com/mike-marcacci/node-redlock)
