@@ -12,7 +12,8 @@
     "test:coverage": "npm run test -- --coverage",
     "clean": "rimraf lib",
     "build": "npm run clean && tsc",
-    "prepublish": "npm run test && npm run build"
+    "prepublish": "npm run test && npm run build",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
