@@ -19,8 +19,9 @@ $ npm install --save @omnichat/middy-lock-redis
 ```typescript
 import middy from '@middy/core';
 import { MiddlewareLock } from '@omnichat/middy-lock-redis';
+import { Redis } from 'ioredis';
 
-const client: CompatibleRedisClient = {
+const client: Redis = {
   eval: () => {},
 };
 
@@ -60,6 +61,21 @@ lambda-function:
             - Arn
 ```
 
+## Parameters
+
+- `prefix (required)` - Prefix for mounting the key in the registry lock
+- `param (required)` - Name of the parameter that will be retrieved from the request to be used as a registry lock key
+- `connection (required)` - Redis client connection that will be used by redlock
+- `ttl (optional)` - Lock expiration time, if not informed the default is 7500
+- `options (optional)` - Redlock options configuration for more information on the options see the redlock doc [here](https://github.com/mike-marcacci/node-redlock). Default value if not informed is:
+
+```typescript
+{
+driftFactor: 0.1,
+retryCount: 1,
+};
+```
+
 ## Run test
 
 To run the unit tests, run following command
@@ -68,15 +84,19 @@ To run the unit tests, run following command
   npm run test
 ```
 
-## Credits
+## Libraries
 
-Created by Omnichat team
-
-Libraries used:
+Used:
 
 - [redlock](https://github.com/mike-marcacci/node-redlock)
 
-Libraries dependence:
+Dependence:
 
 - [Middy](https://github.com/middyjs/middy)
 - [ioredis](https://github.com/luin/ioredis)
+
+Obs: if you have an installation problem of not having the redlock library, you will have to install it in your project
+
+## Credits
+
+Created by [@fzanfolim](https://github.com/fzanfolim) in OmniChat Squad Bot
