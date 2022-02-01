@@ -1,8 +1,8 @@
 import { MiddlewareLock } from './index';
 import { CompatibleRedisClient } from 'redlock';
-import { IHttp, ISqs } from './interface';
+import { IEvent } from './interface';
 
-const request: IHttp = {
+const request: IEvent = {
   event: {
     body: JSON.stringify({
       chatId: 'chatId',
@@ -14,7 +14,7 @@ const request: IHttp = {
   },
 };
 
-const requestSqs: ISqs = {
+const requestSqs: IEvent = {
   event: {
     Records: [
       {
@@ -78,7 +78,7 @@ describe('MiddlewareLock test', () => {
   it('invoke after middleware and return SQS queue', async () => {
     const response = MiddlewareLock('MESSAGE', 'chatId', client);
     requestSqs.event.RecordsLock = Object.assign([], requestSqs.event.Records);
-    requestSqs.event.Records.length = 0;
+    requestSqs.event.Records = [];
     const afterResponse = await response.after(requestSqs);
 
     expect(afterResponse).toEqual({
