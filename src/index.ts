@@ -1,5 +1,5 @@
 import Redlock, { Lock, Options, CompatibleRedisClient } from 'redlock';
-import { SQSRecord } from './interface';
+import { IEvent, SQSRecord } from './interface';
 
 export function MiddlewareLock(
   prefix: string,
@@ -8,7 +8,7 @@ export function MiddlewareLock(
   ttl?: number,
   options?: Options,
 ) {
-  const before = async <T extends { event: any }>(request: T) => {
+  const before = async (request: IEvent) => {
     if (connection) {
       const optionsRedlock = options || {
         driftFactor: 0.1,
@@ -17,6 +17,7 @@ export function MiddlewareLock(
       const redLockClient: Redlock = new Redlock([connection], optionsRedlock);
 
       const redlock: { lock: Lock | undefined } = { lock: undefined };
+
       if (request.event.Records) {
         request.event.RecordsLock = [];
         for (const [index, record] of request.event.Records.entries()) {
@@ -47,7 +48,7 @@ export function MiddlewareLock(
     }
   };
 
-  const after = async <T extends { event: any }>(request: T) => {
+  const after = async (request: IEvent) => {
     const timeNow = new Date().getTime();
     if (request.event.Records) {
       for (const record of request.event.Records) {
@@ -56,7 +57,7 @@ export function MiddlewareLock(
         }
       }
 
-      if (request.event?.RecordsLock.length > 0) {
+      if (request.event?.RecordsLock && request.event?.RecordsLock.length > 0) {
         return {
           batchItemFailures: request.event?.RecordsLock.map(
             (record: SQSRecord) => ({
@@ -65,7 +66,10 @@ export function MiddlewareLock(
           ),
         };
       }
-    } else if (request.event.lock?.expiration >= timeNow) {
+    } else if (
+      request.event.lock &&
+      request.event.lock?.expiration >= timeNow
+    ) {
       await request.event.lock.unlock();
     }
   };

@@ -1,20 +1,18 @@
 type Callback<T> = (err: any, value?: T) => void;
 
-export interface IHttp {
-  event: { body: string; lock?: Lock };
-}
-
-export interface ISqs {
+export interface IEvent {
   event: {
-    Records: SQSRecord[] | [];
+    Records?: SQSRecord[];
     RecordsLock?: SQSRecord[];
+    body?: string;
+    lock?: Lock;
   };
 }
 
 export interface SQSRecord {
   messageId: string;
   body: string;
-  lock?: Lock;
+  lock: Lock;
 }
 
 export interface Lock {
