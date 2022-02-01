@@ -1,4 +1,4 @@
-type Callback<T> = (err: any, value?: T) => void;
+type Callback<T> = (err: Error, value?: T) => void;
 
 export interface IEvent {
   event: {
@@ -7,7 +7,7 @@ export interface IEvent {
     body?: string;
     lock?: Lock;
   };
-  error?: any;
+  error?: Error;
 }
 
 export interface SQSRecord {
