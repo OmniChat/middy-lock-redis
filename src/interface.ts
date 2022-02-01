@@ -7,6 +7,7 @@ export interface IEvent {
     body?: string;
     lock?: Lock;
   };
+  error?: any;
 }
 
 export interface SQSRecord {
