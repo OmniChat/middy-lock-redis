@@ -74,7 +74,7 @@ export function MiddlewareLock(
     }
   };
 
-  const onError = async (request: any) => {
+  const onError = async (request: IEvent) => {
     throw `Error Lock/Unlock: ${JSON.stringify(request.error)}`;
   };
 
