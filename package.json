@@ -1,6 +1,6 @@
 {
-  "name": "@omnichat/middy-lock-redis",
-  "version": "1.0.0-beta",
+  "name": "middy-lock-redis",
+  "version": "1.0.0",
   "description": "Middy Lock Redis Lambda",
   "main": "lib/src/index",
   "typings": "lib/src/index",
@@ -18,9 +18,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/omnichat/middy-lock-redis.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
   "author": "Felipe Zanfolin",
