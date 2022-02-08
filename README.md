@@ -22,7 +22,7 @@ import { MiddlewareLock } from '@omnichat/middy-lock-redis';
 import { Redis } from 'ioredis';
 
 const redis = new Redis({
-    host: http://localhost/,
+    host: 'http://localhost/',
     port: 6379,
 });
 

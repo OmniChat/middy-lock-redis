@@ -1,6 +1,6 @@
 {
   "name": "@omnichat/middy-lock-redis",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "Middy Lock Redis Lambda",
   "main": "lib/src/index",
   "typings": "lib/src/index",
@@ -15,12 +15,32 @@
     "prepublish": "npm run test && npm run build",
     "prepare": "npm run build"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry":"https://npm.pkg.github.com/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/omnichat/middy-lock-redis.git"
   },
-  "keywords": [],
-  "author": "Felipe Zanfolin",
+  "keywords": [
+    "Lambda",
+    "SQS",
+    "Middleware",
+    "Serverless",
+    "ioredis",
+    "middy",
+    "AWS Lambda",
+    "AWS SQS",
+    "redis",
+    "lock",
+    "concurrence",
+    "redis-lock"
+  ],
+  "author": {
+    "name": "OmniChat by @fzanfolim",
+    "url": "https://github.com/omnichat"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/omnichat/middy-lock-redis/issues"
